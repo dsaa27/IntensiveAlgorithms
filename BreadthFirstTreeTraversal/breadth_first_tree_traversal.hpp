@@ -17,5 +17,29 @@ struct TreeNode {
 
 class Solution {
 public:
-  std::vector<std::vector<int>> levelOrder(TreeNode *root) {}
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> result;
+
+        std::deque<TreeNode*> nodes;
+        if (root)
+            nodes.push_back(root);
+        while (!nodes.empty()) {
+            std::vector<TreeNode*> levelNodes;
+            while (!nodes.empty()) {
+                levelNodes.push_back(nodes.front());
+                nodes.pop_front();
+            }
+            result.push_back({});
+            for (const auto* node : levelNodes) {
+                if (node->left) {
+                    nodes.push_back(node->left);
+                }
+                if (node->right) {
+                    nodes.push_back(node->right);
+                }
+                result.back().push_back(node->val);
+            }
+        }
+        return result;
+    }
 };
